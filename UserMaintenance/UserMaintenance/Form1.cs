@@ -41,14 +41,14 @@ namespace UserMaintenance
             if (sfd.ShowDialog() != DialogResult.OK) return;
             using (StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.UTF8))
             {
-                // Végigmegyünk a hallgató lista elemein
-                foreach (var s in users)
+                foreach (User s in users)
                 {
                     sw.Write(s.ID);
                     sw.Write(";");
                     sw.Write(s.FullName);
                     sw.Write(";");
                     sw.WriteLine();
+                    //comment
                 }
             }
         }
