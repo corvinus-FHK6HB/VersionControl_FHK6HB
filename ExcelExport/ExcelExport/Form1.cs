@@ -77,13 +77,39 @@ namespace ExcelExport
                 values[counter, 1] = lakás.Vendor;
                 values[counter, 2] = lakás.Side;
                 values[counter, 3] = lakás.District;
-                values[counter, 4] = lakás.Elevator;
+                values[counter, 4] = lakás.Elevator
+                    ? "van"
+                    : "Nincs";
                 values[counter, 5] = lakás.NumberOfRooms;
                 values[counter, 6] = lakás.FloorArea;
                 values[counter, 7] = lakás.Price;
                 values[counter, 8] = "";
                 counter++;
             }
+
+            var range = xlSheet.get_Range(
+                GetCell(2, 1),
+                GetCell(1 + values.GetLength(0), values.GetLength(1)));
+            range.Value2 = values;
         }
+
+        private string GetCell(int x, int y)
+        {
+            string ExcelCoordinate = "";
+            int dividend = y;
+            int modulo;
+
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                ExcelCoordinate = Convert.ToChar(65 + modulo).ToString() + ExcelCoordinate;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+            ExcelCoordinate += x.ToString();
+
+            return ExcelCoordinate;
+        }
+
+
     }
 }
