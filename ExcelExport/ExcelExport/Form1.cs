@@ -20,6 +20,7 @@ namespace ExcelExport
         Excel.Workbook xlWB;
         Excel.Worksheet xlSheet;
         string[] headers;
+        int _million = (int)Math.Pow(10, 6);
         public Form1()
         {
             InitializeComponent();
@@ -73,6 +74,7 @@ namespace ExcelExport
             object[,] values = new object[Lakások.Count, headers.Length];
 
             int counter = 0;
+            int floouCol = 6;
             foreach (var lakás in Lakások)
             {
                 values[counter, 0] = lakás.Code;
@@ -83,9 +85,12 @@ namespace ExcelExport
                     ? "van"
                     : "Nincs";
                 values[counter, 5] = lakás.NumberOfRooms;
-                values[counter, 6] = lakás.FloorArea;
+                values[counter, floouCol] = lakás.FloorArea;
                 values[counter, 7] = lakás.Price;
-                values[counter, 8] = "";
+                values[counter, 8] = string.Format("={0}/{1}*{2}",
+                    "H" + (counter + 2).ToString(),
+                    GetCell(counter+2, floouCol+1),
+                    _million.ToString());
                 counter++;
             }
 
@@ -105,6 +110,18 @@ namespace ExcelExport
             headerRange.RowHeight = 40;
             headerRange.Interior.Color = Color.LightBlue;
             headerRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+
+            int lastRowID = xlSheet.UsedRange.Rows.Count;
+            Excel.Range completeTableRange = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
+            completeTableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
+            
+            Excel.Range FirtColRange = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, 1));
+            FirtColRange.Font.Bold = true;
+            FirtColRange.Interior.Color = Color.LightYellow;
+
+            Excel.Range LastColRange = xlSheet.get_Range(GetCell(1, headers.Length), GetCell(lastRowID, headers.Length));
+            LastColRange.Interior.Color = Color.LightGreen;
+            LastColRange.NumberFormat = "###,###,###.00";
         }
 
         private string GetCell(int x, int y)
