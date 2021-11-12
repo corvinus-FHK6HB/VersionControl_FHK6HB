@@ -29,13 +29,40 @@ namespace Fejlesztési_minták
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.mainPanel = new System.Windows.Forms.Panel();
+            this.CreateTimer = new System.Windows.Forms.Timer(this.components);
+            this.ConveyorTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
+            // 
+            // mainPanel
+            // 
+            this.mainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainPanel.Location = new System.Drawing.Point(0, 93);
+            this.mainPanel.Name = "mainPanel";
+            this.mainPanel.Size = new System.Drawing.Size(788, 359);
+            this.mainPanel.TabIndex = 0;
+            // 
+            // CreateTimer
+            // 
+            this.CreateTimer.Enabled = true;
+            this.CreateTimer.Interval = 3000;
+            this.CreateTimer.Tick += new System.EventHandler(this.CreateTimer_Tick);
+            // 
+            // ConveyorTimer
+            // 
+            this.ConveyorTimer.Enabled = true;
+            this.ConveyorTimer.Interval = 10;
+            this.ConveyorTimer.Tick += new System.EventHandler(this.ConveyorTimer_Tick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.mainPanel);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -43,6 +70,10 @@ namespace Fejlesztési_minták
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel mainPanel;
+        private System.Windows.Forms.Timer CreateTimer;
+        private System.Windows.Forms.Timer ConveyorTimer;
     }
 }
 
