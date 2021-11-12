@@ -12,7 +12,8 @@ namespace Fejlesztési_minták.Entities
     {
         protected override void DrawImage(Graphics g)
         {
-            
+            var image = Image.FromFile(@"Images\car.png");
+            g.DrawImage(image, 0, 0,Width,Height);
         }
     }
 }
