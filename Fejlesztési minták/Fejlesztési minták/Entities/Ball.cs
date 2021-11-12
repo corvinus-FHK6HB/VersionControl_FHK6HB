@@ -11,11 +11,16 @@ namespace Fejlesztési_minták.Entities
 {
     public class Ball : Toy
     {
+        public SolidBrush Ballcolor { get; private set; }
+        public Ball(Color color)
+        {
+            Ballcolor = new SolidBrush(color);
+        }
         protected override void DrawImage(Graphics g)
         {
             //Brush ecset = new SolidBrush(Color.Blue);
             g.FillEllipse(
-                new SolidBrush(Color.Blue),
+                Ballcolor,
                 0,
                 0,
                 Width,

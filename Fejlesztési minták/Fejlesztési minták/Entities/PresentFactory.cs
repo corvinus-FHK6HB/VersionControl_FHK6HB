@@ -1,19 +1,20 @@
 ﻿using Fejlesztési_minták.Abstractions;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Fejlesztési_minták.Entities
 {
-    public class BallFactory : ItoyFactory
+    public class PresentFactory : ItoyFactory
     {
-        public Color BallColor { get; set; }
+        public Color BoxColor { get; set; }
+        public Color RibbonColor { get; set; }
         public Toy CreateNew()
         {
-            return new Ball(BallColor);
+            return new Present(BoxColor, RibbonColor);
         }
     }
 }

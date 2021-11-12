@@ -16,12 +16,17 @@ namespace Fejlesztési_minták
     {
 
         List<Toy> _toys = new List<Toy>();
+        private Toy _nextToy;
         private ItoyFactory _toyFactory;
 
         public ItoyFactory ToyFactory
         {
             get { return _toyFactory; }
-            set { _toyFactory = value; }
+            set 
+            { 
+                _toyFactory = value;
+                DisplayNext();
+            }
         }
 
 
@@ -63,12 +68,64 @@ namespace Fejlesztési_minták
 
         private void btnBall_Click(object sender, EventArgs e)
         {
-            ToyFactory = new BallFactory();
+            ToyFactory = new BallFactory()
+            {
+                BallColor = btnred.BackColor
+            };
         }
 
         private void btnCar_Click(object sender, EventArgs e)
         {
             ToyFactory = new CarFactory();
         }
+        private void btnpresent_Click(object sender, EventArgs e)
+        {
+            ToyFactory = new PresentFactory()
+            {
+                BoxColor = btnbox.BackColor,
+                RibbonColor = btnribbon.BackColor
+            };
+        }
+        private void DisplayNext()
+        {
+            if (_nextToy != null)
+                this.Controls.Remove(_nextToy);
+            _nextToy = ToyFactory.CreateNew();
+            _nextToy.Left = label1.Left + label1.Width;
+            _nextToy.Top = label1.Top;
+            this.Controls.Add(_nextToy);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cd = new ColorDialog();
+            cd.Color = button.BackColor;
+            if (cd.ShowDialog()!=DialogResult.OK)
+                return;
+            button.BackColor = cd.Color;
+        }
+
+        private void btnbox_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cd = new ColorDialog();
+            cd.Color = button.BackColor;
+            if (cd.ShowDialog() != DialogResult.OK)
+                return;
+            button.BackColor = cd.Color;
+        }
+
+        private void btnribbon_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cd = new ColorDialog();
+            cd.Color = button.BackColor;
+            if (cd.ShowDialog() != DialogResult.OK)
+                return;
+            button.BackColor = cd.Color;
+        }
+
+        
     }
 }
