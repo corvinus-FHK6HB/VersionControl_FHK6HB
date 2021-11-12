@@ -1,4 +1,5 @@
-﻿using Fejlesztési_minták.Entities;
+﻿using Fejlesztési_minták.Abstractions;
+using Fejlesztési_minták.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,20 +15,20 @@ namespace Fejlesztési_minták
     public partial class Form1 : Form
     {
 
-        List<Ball> _balls = new List<Ball>();
-        private BallFactory _ballFactory;
+        List<Toy> _toys = new List<Toy>();
+        private ItoyFactory _toyFactory;
 
-        public BallFactory Ballfactory
+        public ItoyFactory ToyFactory
         {
-            get { return _ballFactory; }
-            set { _ballFactory = value; }
+            get { return _toyFactory; }
+            set { _toyFactory = value; }
         }
 
 
         public Form1()
         {
             InitializeComponent();
-            Ballfactory = new BallFactory();
+            ToyFactory = new CarFactory();
 
 
 
@@ -35,16 +36,16 @@ namespace Fejlesztési_minták
 
         private void CreateTimer_Tick(object sender, EventArgs e)
         {
-            var ball = Ballfactory.CreateNew();
-            _balls.Add(ball);
-            mainPanel.Controls.Add(ball);
-            ball.Left = -ball.Width;
+            var toy = ToyFactory.CreateNew();
+            _toys.Add(toy);
+            mainPanel.Controls.Add(toy);
+            toy.Left = -toy.Width;
         }
 
         private void ConveyorTimer_Tick(object sender, EventArgs e)
         {
             var lastPosition = 0;
-            foreach (var item in _balls)
+            foreach (var item in _toys)
             {
                 item.MoveToy();
                 if (item.Left>lastPosition)
@@ -54,10 +55,20 @@ namespace Fejlesztési_minták
             }
             if(lastPosition>1000)
             {
-                var oldestBall = _balls[0];
-                _balls.Remove(oldestBall);
-                mainPanel.Controls.Remove(oldestBall);
+                var oldesttoy = _toys[0];
+                _toys.Remove(oldesttoy);
+                mainPanel.Controls.Remove(oldesttoy);
             }
+        }
+
+        private void btnBall_Click(object sender, EventArgs e)
+        {
+            ToyFactory = new BallFactory();
+        }
+
+        private void btnCar_Click(object sender, EventArgs e)
+        {
+            ToyFactory = new CarFactory();
         }
     }
 }

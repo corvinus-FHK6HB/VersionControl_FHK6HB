@@ -33,6 +33,8 @@ namespace Fejlesztési_minták
             this.mainPanel = new System.Windows.Forms.Panel();
             this.CreateTimer = new System.Windows.Forms.Timer(this.components);
             this.ConveyorTimer = new System.Windows.Forms.Timer(this.components);
+            this.btnCar = new System.Windows.Forms.Button();
+            this.btnBall = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // mainPanel
@@ -57,11 +59,33 @@ namespace Fejlesztési_minták
             this.ConveyorTimer.Interval = 10;
             this.ConveyorTimer.Tick += new System.EventHandler(this.ConveyorTimer_Tick);
             // 
+            // btnCar
+            // 
+            this.btnCar.Location = new System.Drawing.Point(12, 12);
+            this.btnCar.Name = "btnCar";
+            this.btnCar.Size = new System.Drawing.Size(89, 62);
+            this.btnCar.TabIndex = 1;
+            this.btnCar.Text = "Car";
+            this.btnCar.UseVisualStyleBackColor = true;
+            this.btnCar.Click += new System.EventHandler(this.btnCar_Click);
+            // 
+            // btnBall
+            // 
+            this.btnBall.Location = new System.Drawing.Point(107, 12);
+            this.btnBall.Name = "btnBall";
+            this.btnBall.Size = new System.Drawing.Size(89, 62);
+            this.btnBall.TabIndex = 2;
+            this.btnBall.Text = "Ball";
+            this.btnBall.UseVisualStyleBackColor = true;
+            this.btnBall.Click += new System.EventHandler(this.btnBall_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnBall);
+            this.Controls.Add(this.btnCar);
             this.Controls.Add(this.mainPanel);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -74,6 +98,8 @@ namespace Fejlesztési_minták
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Timer CreateTimer;
         private System.Windows.Forms.Timer ConveyorTimer;
+        private System.Windows.Forms.Button btnCar;
+        private System.Windows.Forms.Button btnBall;
     }
 }
 
