@@ -51,8 +51,8 @@ namespace UnitTestExample.Test
         }
         [
             Test,
-            TestCase("irf@uni-corvinus.hu", "Abcd1234"),
-            TestCase("irf@uni-corvinus.hu", "Abcd1234567")
+            TestCase("irfteszt1@uni-corvinus.hu", "Abcd1234"),
+            TestCase("irfteszt2@uni-corvinus.hu", "AbcdEF123456")
         ]
         public void TestRegisterHappyPath(string email, string password)
         {
