@@ -23,15 +23,21 @@ namespace Mikroszimuláció
         {
             InitializeComponent();
 
-            Population = GetPopulation(@"C:\Temp\nép-teszt.csv");
+
             BirthProbabilities = GetBirthProbabilities(@"C:\Temp\születés.csv");
             DeathProbabilities = GetDeathProbabilities(@"C:\Temp\halál.csv");
+            
 
-            for (int year = 2005; year <= 2024; year++)
+        }
+
+        private void StartSimulation(int endYear, string csvpath)
+        {
+            Population = GetPopulation(csvpath);
+            for (int year = 2005; year <= endYear; year++)
             {
                 for (int i = 0; i < Population.Count; i++)
                 {
-                    // Ide jön a szimulációs lépés
+                    SimStep(year, Population[i]);
                 }
 
                 int nbrOfMales = (from x in Population
@@ -40,10 +46,12 @@ namespace Mikroszimuláció
                 int nbrOfFemales = (from x in Population
                                     where x.Gender == Gender.Female && x.IsAlive
                                     select x).Count();
-                Console.WriteLine(
-                    string.Format("Év:{0} Fiúk:{1} Lányok:{2}", year, nbrOfMales, nbrOfFemales));
+               main.Text+=(string.Format(
+                   "Szimulációs év: {0}\n\t Fiúk:{1}\n\t Lányok:{2}\n\n",
+                   year, 
+                   nbrOfMales, 
+                   nbrOfFemales));
             }
-
         }
 
         private void SimStep(int year, Person person)
@@ -142,6 +150,23 @@ namespace Mikroszimuláció
             }
 
             return death;
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            StartSimulation((int)numericUpDownyear.Value, textpath.Text);
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog();
+            ofd.FileName = textpath.Text;
+
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            textpath.Text = ofd.FileName;
         }
     }
 }
