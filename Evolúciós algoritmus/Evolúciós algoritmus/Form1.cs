@@ -46,11 +46,20 @@ namespace Evolúciós_algoritmus
             label1.Text = string.Format(
                 "{0}. generáció",
                 generation);
-            gc.ResetCurrentLevel();
             var playerList = from p in gc.GetCurrentPlayers()
                              orderby p.GetFitness() descending
                              select p;
             var topPerformers = playerList.Take(populationSize / 2).ToList();
+            var winners = from p in topPerformers
+                          where p.IsWinner
+                          select p;
+            if (winners.Count() > 0)
+            {
+                winnerBrain = winners.FirstOrDefault().Brain.Clone();
+                gc.GameOver -= Gc_GameOver;
+                return;
+            }
+            gc.ResetCurrentLevel();
             foreach (var p in topPerformers)
             {
                 var b = p.Brain.Clone();
@@ -63,15 +72,6 @@ namespace Evolúciós_algoritmus
                     gc.AddPlayer(b.Mutate().ExpandBrain(nbrOfStepsIncrement));
                 else
                     gc.AddPlayer(b.Mutate());
-            }
-            var winners = from p in topPerformers
-                          where p.IsWinner
-                          select p;
-            if (winners.Count() > 0)
-            {
-                winnerBrain = winners.FirstOrDefault().Brain.Clone();
-                gc.GameOver -= Gc_GameOver;
-                return;
             }
             gc.Start();
         }
